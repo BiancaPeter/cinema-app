@@ -9,10 +9,10 @@ public class MovieSeat {
     private Long id;
 
     @Column
-    private Integer row;
+    private Integer numberOfRows;
 
     @Column
-    private Integer column;
+    private Integer numberOfColumns;
 
     @Column
     private boolean isAvailable;
@@ -32,20 +32,20 @@ public class MovieSeat {
         return id;
     }
 
-    public Integer getRow() {
-        return row;
+    public Integer getNumberOfRows() {
+        return numberOfRows;
     }
 
-    public void setRow(Integer row) {
-        this.row = row;
+    public void setNumberOfRows(Integer numberOfRows) {
+        this.numberOfRows = numberOfRows;
     }
 
-    public Integer getColumn() {
-        return column;
+    public Integer getNumberOfColumns() {
+        return numberOfColumns;
     }
 
-    public void setColumn(Integer column) {
-        this.column = column;
+    public void setNumberOfColumns(Integer numberOfColumns) {
+        this.numberOfColumns = numberOfColumns;
     }
 
     public boolean isAvailable() {
