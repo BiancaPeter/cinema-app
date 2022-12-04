@@ -1,8 +1,10 @@
 package com.spring.cinemacity.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,12 +22,14 @@ public class Order {
     private Double totalPrice;
 
     @ManyToOne
-    @JsonIgnore
+    @JsonBackReference(value = "user-order")
     @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<MovieSeat> movieSeatList;
+    @JsonManagedReference(value = "order-ticket")
+    private List<Ticket> ticketList;
+
 
     public Order() {
     }
@@ -58,11 +62,14 @@ public class Order {
         this.user = user;
     }
 
-    public List<MovieSeat> getMovieSeatList() {
-        return movieSeatList;
+    public List<Ticket> getTicketList() {
+        if (this.ticketList == null) {
+            this.ticketList = new ArrayList<>();
+        }
+        return ticketList;
     }
 
-    public void setMovieSeatList(List<MovieSeat> movieSeatList) {
-        this.movieSeatList = movieSeatList;
+    public void setTicketList(List<Ticket> ticketList) {
+        this.ticketList = ticketList;
     }
 }

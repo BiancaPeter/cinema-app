@@ -1,6 +1,9 @@
 package com.spring.cinemacity.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,13 +18,13 @@ public class CinemaRoom {
     @Column
     private Integer numberOfCols;
 
-    @Column
-    private Integer extraPrices;
 
     @OneToMany(mappedBy = "cinemaRoom", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "cinemaRoom-movie")
     private List<Movie> movieList;
 
     @OneToMany(mappedBy = "cinemaRoom", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "cinemaRoom-seat")
     private List<Seat> seatList;
 
     public CinemaRoom() {
@@ -47,13 +50,6 @@ public class CinemaRoom {
         this.numberOfCols = numberOfCols;
     }
 
-    public Integer getExtraPrices() {
-        return extraPrices;
-    }
-
-    public void setExtraPrices(Integer extraPrices) {
-        this.extraPrices = extraPrices;
-    }
 
     public List<Movie> getMovieList() {
         return movieList;
@@ -64,10 +60,14 @@ public class CinemaRoom {
     }
 
     public List<Seat> getSeatList() {
+        if (this.seatList == null) {
+            this.seatList = new ArrayList<>();
+        }
         return seatList;
     }
 
     public void setSeatList(List<Seat> seatList) {
         this.seatList = seatList;
     }
+
 }

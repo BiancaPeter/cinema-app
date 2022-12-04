@@ -1,11 +1,15 @@
 package com.spring.cinemacity.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class WatchingTime {
+public class Projection {
     @Id
     @GeneratedValue
     private Long id;
@@ -18,12 +22,15 @@ public class WatchingTime {
 
     @ManyToOne
     @JoinColumn(name = "movie_id")
+    @JsonBackReference(value = "movie-projection")
     private Movie movie;
 
-    @OneToMany(mappedBy = "watchingTime", cascade = CascadeType.ALL)
-    private List<MovieSeat>movieSeatList;
+    @OneToMany(mappedBy = "projection", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "projection-ticket")
+    private List<Ticket> ticketList;
 
-    public WatchingTime() {
+
+    public Projection() {
     }
 
     public Long getId() {
@@ -54,11 +61,14 @@ public class WatchingTime {
         this.movie = movie;
     }
 
-    public List<MovieSeat> getMovieSeatList() {
-        return movieSeatList;
+    public List<Ticket> getTicketList() {
+        if (this.ticketList == null) {
+            this.ticketList = new ArrayList<>();
+        }
+        return ticketList;
     }
 
-    public void setMovieSeatList(List<MovieSeat> movieSeatList) {
-        this.movieSeatList = movieSeatList;
+    public void setTicketList(List<Ticket> ticketList) {
+        this.ticketList = ticketList;
     }
 }

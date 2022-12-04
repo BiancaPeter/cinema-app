@@ -1,6 +1,10 @@
 package com.spring.cinemacity.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,11 +18,13 @@ public class Movie {
     private Integer price;
 
     @ManyToOne
-    @JoinColumn(name = "cinemaRoom_id")
+    @JoinColumn(name = "cinema_room_id")
+    @JsonBackReference(value = "cinemaRoom-movie")
     private CinemaRoom cinemaRoom;
 
-    @OneToMany(mappedBy = "movie",cascade = CascadeType.ALL)
-    private List<WatchingTime> watchingTimeList;
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "movie-projection")
+    private List<Projection> projectionList;
 
     public Movie() {
     }
@@ -51,19 +57,14 @@ public class Movie {
         this.cinemaRoom = cinemaRoom;
     }
 
-    public List<WatchingTime> getDateList() {
-        return watchingTimeList;
+    public List<Projection> getProjectionList() {
+        if (this.projectionList == null) {
+            this.projectionList = new ArrayList<>();
+        }
+        return projectionList;
     }
 
-    public void setDateList(List<WatchingTime> watchingTimeList) {
-        this.watchingTimeList = watchingTimeList;
-    }
-
-    public List<WatchingTime> getWatchingTimeList() {
-        return watchingTimeList;
-    }
-
-    public void setWatchingTimeList(List<WatchingTime> watchingTimeList) {
-        this.watchingTimeList = watchingTimeList;
+    public void setProjectionList(List<Projection> projectionList) {
+        this.projectionList = projectionList;
     }
 }
