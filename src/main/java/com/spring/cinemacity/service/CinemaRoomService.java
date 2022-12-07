@@ -46,7 +46,7 @@ public class CinemaRoomService {
             for (int j = 1; j <= addCinemaRoomDTO.getNumberOfCols(); j++) {
                 Seat seat = new Seat();
                 seat.setSeatRow(i);
-                seat.setSeatColumn(j);
+                seat.setSeatCol(j);
                 seat.setExtraPrice(0);
                 cinemaRoom.getSeatList().add(seat);
                 seat.setCinemaRoom(cinemaRoom);
@@ -62,7 +62,7 @@ public class CinemaRoomService {
 //        }
 //        return null;
         return cinemaRoom.getSeatList().stream()
-                .filter(seat -> seat.getSeatRow() == row && seat.getSeatColumn() == column)
+                .filter(seat -> seat.getSeatRow() == row && seat.getSeatCol() == column)
                 .findFirst();
     }
 

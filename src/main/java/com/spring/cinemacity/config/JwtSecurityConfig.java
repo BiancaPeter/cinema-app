@@ -37,6 +37,7 @@ public class JwtSecurityConfig {
                 .antMatchers("/register").permitAll()
                 .antMatchers("/cinema/**").hasRole("ADMIN")
                 .antMatchers("/movie/**").hasRole("ADMIN")
+                .antMatchers("/movie").hasRole("CLIENT")
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

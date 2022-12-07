@@ -16,7 +16,7 @@ public class Seat {
     private Integer seatRow;
 
     @Column
-    private Integer seatColumn;
+    private Integer seatCol;
 
     @Column
     private Integer extraPrice;
@@ -45,12 +45,12 @@ public class Seat {
         this.seatRow = seatRow;
     }
 
-    public Integer getSeatColumn() {
-        return seatColumn;
+    public Integer getSeatCol() {
+        return seatCol;
     }
 
-    public void setSeatColumn(Integer seatColumn) {
-        this.seatColumn = seatColumn;
+    public void setSeatCol(Integer seatCol) {
+        this.seatCol = seatCol;
     }
 
     public Integer getExtraPrice() {

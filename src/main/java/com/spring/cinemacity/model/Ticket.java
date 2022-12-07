@@ -35,7 +35,7 @@ public class Ticket {
         return id;
     }
 
-    public boolean isAvailable() {
+    public boolean getAvailable() {
         return isAvailable;
     }
 
