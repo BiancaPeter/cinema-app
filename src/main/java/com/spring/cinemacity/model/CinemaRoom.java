@@ -30,6 +30,15 @@ public class CinemaRoom {
     public CinemaRoom() {
     }
 
+
+    public CinemaRoom(Long id, int numberOfRows, int numberOfCols, List<Movie> movieList, List<Seat> seatList) {
+        this.id = id;
+        this.numberOfRows = numberOfRows;
+        this.numberOfCols = numberOfCols;
+        this.movieList = movieList;
+        this.seatList = seatList;
+    }
+
     public Long getId() {
         return id;
     }

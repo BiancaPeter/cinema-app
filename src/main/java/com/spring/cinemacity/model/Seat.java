@@ -33,6 +33,15 @@ public class Seat {
     public Seat() {
     }
 
+    public Seat(Long id, Integer seatRow, Integer col, Integer extraPrice, CinemaRoom cinemaRoom, List<Ticket> ticketList) {
+        this.id = id;
+        this.seatRow = seatRow;
+        this.seatCol = col;
+        this.extraPrice = extraPrice;
+        this.cinemaRoom = cinemaRoom;
+        this.ticketList = ticketList;
+    }
+
     public Long getId() {
         return id;
     }

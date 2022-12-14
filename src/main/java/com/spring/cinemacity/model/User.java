@@ -19,6 +19,9 @@ public class User {
     @Column
     private String password;
 
+    @Column
+    private String email;
+
     @ManyToMany
     @JsonIgnoreProperties("userList")
     @JoinTable(
@@ -32,6 +35,14 @@ public class User {
     private List<Order> orderList;
 
     public User() {
+    }
+
+    public User(Long id, String username, String password, List<Role> roleList, List<Order> orderList) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.roleList = roleList;
+        this.orderList = orderList;
     }
 
     public Long getId() {
@@ -67,6 +78,9 @@ public class User {
     }
 
     public List<Order> getOrderList() {
+        if (this.orderList == null) {
+            this.orderList = new ArrayList<>();
+        }
         return orderList;
     }
 
@@ -74,5 +88,11 @@ public class User {
         this.orderList = orderList;
     }
 
+    public String getEmail() {
+        return email;
+    }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

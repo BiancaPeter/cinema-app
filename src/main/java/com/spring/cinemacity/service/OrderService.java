@@ -1,6 +1,7 @@
 package com.spring.cinemacity.service;
 
 
+import com.itextpdf.text.DocumentException;
 import com.spring.cinemacity.DTO.OrderDTO;
 import com.spring.cinemacity.DTO.SeatDTO;
 import com.spring.cinemacity.model.*;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.mail.MessagingException;
 import java.util.Date;
 
 @Service
@@ -27,8 +29,11 @@ public class OrderService {
     private TicketRepository ticketRepository;
     private OrderRepository orderRepository;
 
+    private MailService mailService;
+
     @Autowired
-    public OrderService(OrderRepository orderRepository, TicketRepository ticketRepository, SeatRepository seatRepository, ProjectionRepository projectionRepository, UserRepository userRepository, CinemaRoomService cinemaRoomService, MovieRepository movieRepository) {
+    public OrderService(MailService mailService, OrderRepository orderRepository, TicketRepository ticketRepository, SeatRepository seatRepository, ProjectionRepository projectionRepository, UserRepository userRepository, CinemaRoomService cinemaRoomService, MovieRepository movieRepository) {
+        this.mailService = mailService;
         this.orderRepository = orderRepository;
         this.ticketRepository = ticketRepository;
         this.seatRepository = seatRepository;
@@ -38,7 +43,7 @@ public class OrderService {
         this.movieRepository = movieRepository;
     }
 
-    public Order buyTicket(OrderDTO orderDTO) {
+    public Order buyTicket(OrderDTO orderDTO) throws MessagingException, DocumentException {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User foundUser = userRepository.findUserByUsername(userDetails.getUsername()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found"));
         //1.caut filmul de la care vreau sa cumpar biletul
@@ -57,7 +62,6 @@ public class OrderService {
         for (SeatDTO seatDTo : orderDTO.getSeats()) {
             Seat foundSeat = seatRepository.findBySeatRowAndSeatCol(seatDTo.getRow(), seatDTo.getCol());
             Ticket foundTicket = ticketRepository.findByProjectionAndSeat(foundProjection, foundSeat);
-            //TODO:NullPointerException because "foundTicket" is null
             if (!foundTicket.getAvailable()) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "the seat at :" + foundSeat.getSeatRow() + "" + foundSeat.getSeatCol() + "" + "is not available");
             }
@@ -67,6 +71,7 @@ public class OrderService {
             foundTicket.setOrder(newOrder);
         }
         newOrder.setTotalPrice(totalPriceOrder);
+        mailService.sendOrderConfirmationMessage(foundUser.getEmail(), newOrder);
         return orderRepository.save(newOrder);
     }
 

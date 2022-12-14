@@ -1,5 +1,6 @@
 package com.spring.cinemacity.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.spring.cinemacity.DTO.AddMovieDTO;
 import com.spring.cinemacity.model.Movie;
 import com.spring.cinemacity.model.Projection;
@@ -20,7 +21,7 @@ public class MovieController {
     }
 
     @PostMapping("/add")
-    public Movie addMovie(@RequestBody AddMovieDTO addMovieDTO){
+    public Movie addMovie(@RequestBody AddMovieDTO addMovieDTO) throws JsonProcessingException {
         return movieService.addMovie(addMovieDTO);
     }
 

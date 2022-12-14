@@ -33,6 +33,14 @@ public class Projection {
     public Projection() {
     }
 
+    public Projection(Long id, LocalDateTime startTime, LocalDateTime endTime, List<Ticket> ticketList, Movie movie) {
+        this.id = id;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.ticketList = ticketList;
+        this.movie = movie;
+    }
+
     public Long getId() {
         return id;
     }

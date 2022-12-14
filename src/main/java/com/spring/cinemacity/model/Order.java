@@ -34,6 +34,14 @@ public class Order {
     public Order() {
     }
 
+    public Order(Long id, Date createdDate, Double totalPrice, List<Ticket> ticketList, User user) {
+        this.id = id;
+        this.createdDate = createdDate;
+        this.totalPrice = totalPrice;
+        this.ticketList = ticketList;
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }
@@ -72,4 +80,5 @@ public class Order {
     public void setTicketList(List<Ticket> ticketList) {
         this.ticketList = ticketList;
     }
+
 }

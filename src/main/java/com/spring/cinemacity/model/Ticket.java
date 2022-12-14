@@ -13,7 +13,7 @@ public class Ticket {
     @Column
     boolean isAvailable;
 
-    @ManyToOne
+    @ManyToOne( cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     @JsonBackReference(value = "order-ticket")
     private Order order;
@@ -29,6 +29,14 @@ public class Ticket {
     private Projection projection;
 
     public Ticket() {
+    }
+
+    public Ticket(Long id, Boolean isAvailable, Seat seat, Projection projection,Order order) {
+        this.id = id;
+        this.isAvailable = isAvailable;
+        this.seat = seat;
+        this.projection = projection;
+        this.order = order;
     }
 
     public Long getId() {
