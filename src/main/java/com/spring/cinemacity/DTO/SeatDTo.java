@@ -1,10 +1,10 @@
 package com.spring.cinemacity.DTO;
 
-public class SeatDTO {
+public class SeatDTo {
     private int row;
     private int col;
 
-    public SeatDTO(int row, int col) {
+    public SeatDTo(int row, int col) {
         this.row = row;
         this.col = col;
     }

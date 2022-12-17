@@ -5,9 +5,9 @@ import java.util.List;
 public class OrderDTO {
 
     private long projectionId;
-    private List<SeatDTO> seats;
+    private List<SeatDTo> seats;
 
-    public OrderDTO(long projectionId, List<SeatDTO> seats) {
+    public OrderDTO(long projectionId, List<SeatDTo> seats) {
         this.projectionId = projectionId;
         this.seats = seats;
     }
@@ -20,11 +20,11 @@ public class OrderDTO {
         this.projectionId = projectionId;
     }
 
-    public List<SeatDTO> getSeats() {
+    public List<SeatDTo> getSeats() {
         return seats;
     }
 
-    public void setSeats(List<SeatDTO> seats) {
+    public void setSeats(List<SeatDTo> seats) {
         this.seats = seats;
     }
 }

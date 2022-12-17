@@ -3,7 +3,7 @@ package com.spring.cinemacity.service;
 
 import com.itextpdf.text.DocumentException;
 import com.spring.cinemacity.DTO.OrderDTO;
-import com.spring.cinemacity.DTO.SeatDTO;
+import com.spring.cinemacity.DTO.SeatDTo;
 import com.spring.cinemacity.model.*;
 import com.spring.cinemacity.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +59,8 @@ public class OrderService {
         newOrder.setUser(foundUser);
         Double totalPriceOrder = 0.0;
         Projection foundProjection = projectionRepository.findById(orderDTO.getProjectionId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "the projection was not found"));
-        for (SeatDTO seatDTo : orderDTO.getSeats()) {
-            Seat foundSeat = seatRepository.findBySeatRowAndSeatCol(seatDTo.getRow(), seatDTo.getCol());
+        for (SeatDTo seatDTo : orderDTO.getSeats()) {
+            Seat foundSeat = seatRepository.findBySeatRowAndSeatColAndCinemaRoom(seatDTo.getRow(), seatDTo.getCol(), foundProjection.getMovie().getCinemaRoom());
             Ticket foundTicket = ticketRepository.findByProjectionAndSeat(foundProjection, foundSeat);
             if (!foundTicket.getAvailable()) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "the seat at :" + foundSeat.getSeatRow() + "" + foundSeat.getSeatCol() + "" + "is not available");
@@ -74,5 +74,4 @@ public class OrderService {
         mailService.sendOrderConfirmationMessage(foundUser.getEmail(), newOrder);
         return orderRepository.save(newOrder);
     }
-
 }

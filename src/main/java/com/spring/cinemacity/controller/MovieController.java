@@ -25,7 +25,6 @@ public class MovieController {
         return movieService.addMovie(addMovieDTO);
     }
 
-//TODO: EROARE CAND RULEZ QUERY (DIN CAUZA USER_ROLE)
     @GetMapping("/projections-available/{movieId}")
     public List<Projection> getAllProjectionsAvailable(@PathVariable Long movieId) {
         return movieService.getAllProjectionsAvailable(movieId);
